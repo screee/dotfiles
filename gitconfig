@@ -7,6 +7,6 @@
 	autocrlf = false
 	editor = code --wait
 [alias]
-  prune = git remote prune origin && git branch -vv | node -e \"Array.from(require('fs').readFileSync(0, 'utf-8').matchAll(/^\\s*([^\\s]+)[^:]+: gone]/gm)).map(b => require('child_process').execSync(`git branch -D ${b[1]}`, {stdio: 'inherit'}))\"
-	wip = git add -A && git commit -m \"WIP\"
-	amend = git add -A && git commit --amend --no-edit
+  gone = !git remote prune origin && git branch -vv | node -e "Array.from(require('fs').readFileSync(0, 'utf-8').matchAll(/^\\s*([a-zA-Z0-9\\-]+)[^:\\n]+: gone]/gm)).map(b => require('child_process').execSync('git branch -D ' + b[1], {stdio: 'inherit'}))"
+	wip = !git add -A && git commit --no-verify --message "WIP"
+	amend = !git add -A && git commit --amend --no-edit
